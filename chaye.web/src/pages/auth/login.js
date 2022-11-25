@@ -84,7 +84,7 @@ const Login = () => {
                 )}
               </Field>
               <div>
-                <Link  style={{textDecoration:"underline", padding:"5% 0%"}} to="/signup">Forget Password?</Link>
+                <Link  style={{textDecoration:"underline", padding:"5% 0%"}} to="/forgetPassword">Forget Password?</Link>
 
               </div>
            
