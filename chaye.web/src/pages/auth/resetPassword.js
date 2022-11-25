@@ -9,6 +9,8 @@ import {
   Input,
   Button,
   Card,
+  InputGroup,
+  InputRightElement,
   CardHeader,
   CardBody,
   CardFooter,
@@ -18,13 +20,16 @@ import { Link, useHistory} from "react-router-dom"
 
 
 const ResetPassword = (props) => {
+
+  const history= useHistory()
   const [resetPasswordInfo, setresetPasswordInfo] = useState({
     email: props.email,
     code: props.code,
     password:"",
     confirmPassword:""
    });
-  const history= useHistory()
+  const [showPassword, setshowPassword] = useState(false);
+  const [showConfirmPassword, setshowConfirmPassword] = useState(false);
 
   function requireValidation(value, name) {
     let error;
@@ -49,36 +54,64 @@ const ResetPassword = (props) => {
     {(props) => (
       <Form>
 
-        <Field
-          name="password"
-          validate={(val) => requireValidation(val, "password")}
-        >
-          {({ field, form }) => (
-            <FormControl
-              isInvalid={form.errors.password && form.touched.password}
-            >
-              <FormLabel>password</FormLabel>
-              <Input {...field} placeholder="password" />
-              <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-            </FormControl>
-          )}
-        </Field>
-        
-        <Field
-          name="confirmPassword"
-          validate={(val) => requireValidation(val, "confirmPassword")}
-        >
-          {({ field, form }) => (
-            <FormControl
-              isInvalid={form.errors.confirmPassword && form.touched.confirmPassword}
-            >
-              <FormLabel>confirm Password</FormLabel>
-              <Input {...field} placeholder="confirmPassword" />
-              <FormErrorMessage>{form.errors.confirmPassword}</FormErrorMessage>
-            </FormControl>
-          )}
-        </Field>
-
+      <Field
+        name={"password"}
+        validate={(val) => requireValidation(val, "password")}
+      >
+        {({ field, form }) => (
+          <FormControl
+            isInvalid={form.errors.password && form.touched.password}
+          >
+            <FormLabel>Password</FormLabel>
+            <InputGroup>
+              <Input
+                {...field}
+                type={showPassword ? "text" : "password"}
+                placeholder="password"
+              />
+              <InputRightElement w="4.5rem">
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={() => setshowPassword(!showPassword)}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+          </FormControl>
+        )}
+      </Field>
+      <Field
+        name={"confirmPassword"}
+        validate={(val) => requireValidation(val, "Confirm password")}
+      >
+        {({ field, form }) => (
+          <FormControl
+            isInvalid={form.errors.confirmPassword && form.touched.confirmPassword}
+          >
+            <FormLabel>Confirm Password</FormLabel>
+            <InputGroup>
+              <Input
+                {...field}
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="confirmPassword"
+              />
+              <InputRightElement w="4.5rem">
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={() => setshowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <FormErrorMessage>{form.errors.confirmPassword}</FormErrorMessage>
+          </FormControl>
+        )}
+      </Field>
       
      
         <Button

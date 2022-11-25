@@ -8,23 +8,29 @@ import {
   FormHelperText,
   Input,
   Button,
+  InputGroup,
+  InputRightElement,
   Card
 } from "@chakra-ui/react";
 import AuthLayout from "../../component/authLayout";
-import { Link} from "react-router-dom"
+import { Link, useHistory} from "react-router-dom"
 
 
 const Signup = () => {
+  const history= useHistory()
   const [requestInfo, setrequestInfo] = useState({
     username: "",
     email: "",
     password: "",
+    image:""
   });
+  const [showPassword, setshowPassword] = useState(false);
+
 
   function requireValidation(value, name) {
     let error;
     if (!value) {
-      console.log(value);
+      console.log(name, value);
       error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
     }
     return error;
@@ -46,6 +52,7 @@ const Signup = () => {
               alert(JSON.stringify(values, null, 2));
               actions.setSubmitting(false);
             }, 1000);
+            history.push("/login")
           }}
         >
           {(props) => (
@@ -81,7 +88,7 @@ const Signup = () => {
               </Field>
 
               <Field
-                name="password"
+                name={"password"}
                 validate={(val) => requireValidation(val, "password")}
               >
                 {({ field, form }) => (
@@ -89,12 +96,45 @@ const Signup = () => {
                     isInvalid={form.errors.password && form.touched.password}
                   >
                     <FormLabel>Password</FormLabel>
-                    <Input {...field} placeholder="password" />
+                    <InputGroup>
+                      <Input
+                        {...field}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="password"
+                      />
+                      <InputRightElement w="4.5rem">
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          onClick={() => setshowPassword(!showPassword)}
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                     <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
 
+              <Field
+                name="image"
+                validate={(val) => requireValidation(val, "image")}
+              >
+                {({ field, form }) => (
+                  <FormControl
+                    isInvalid={form.errors.image && form.touched.image}
+                  >
+                    <FormLabel>image</FormLabel>
+                    <Input
+                     {...field} 
+                     type="file"
+                     accept="images/*"
+                     placeholder="image" />
+                    <FormErrorMessage>{form.errors.image}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
               <Button
                 mt={4}
                 colorScheme="teal"

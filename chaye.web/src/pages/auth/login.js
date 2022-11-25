@@ -13,16 +13,15 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
+  InputRightElement,
 } from "@chakra-ui/react";
 import AuthLayout from "../../component/authLayout";
-import { Link} from "react-router-dom"
-
+import { Link, useHistory } from "react-router-dom";
 
 const Login = () => {
-  const [requestInfo, setrequestInfo] = useState({
-    email: "",
-    password: "",
-  });
+  const history = useHistory();
+  const [requestInfo, setrequestInfo] = useState({ email: "", password: "" });
+  const [showPassword, setshowPassword] = useState(false);
 
   function requireValidation(value, name) {
     let error;
@@ -35,25 +34,28 @@ const Login = () => {
   return (
     <AuthLayout>
       <Card margin={"15% 10%"} padding={"10%"} spacing={4} bg={"white"}>
-          <Heading as='h2' size='2xl' paddingBottom={"5%"}  color={"#FFB769"}>
+        <Heading as="h2" size="2xl" paddingBottom={"5%"} color={"#FFB769"}>
           Chaye!
         </Heading>
-        <Heading as='h3' size='lg' paddingBottom={"5%"}  color={"#052645"}>
+        <Heading as="h3" size="lg" paddingBottom={"5%"} color={"#052645"}>
           Login
         </Heading>
         {/* <p style={{color:"#51759A", paddingBottom:"5%"}}>Create your account to and make your own community</p> */}
         <Formik
           initialValues={requestInfo}
           onSubmit={(values, actions) => {
-            setTimeout(() => {
+            history.push("/home");
+            {
+              /* setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
               actions.setSubmitting(false);
-            }, 1000);
+
+            }, 1000); */
+            }
           }}
         >
           {(props) => (
             <Form>
-
               <Field
                 name="email"
                 validate={(val) => requireValidation(val, "email")}
@@ -70,7 +72,7 @@ const Login = () => {
               </Field>
 
               <Field
-                name="password"
+                name={"password"}
                 validate={(val) => requireValidation(val, "password")}
               >
                 {({ field, form }) => (
@@ -78,16 +80,35 @@ const Login = () => {
                     isInvalid={form.errors.password && form.touched.password}
                   >
                     <FormLabel>Password</FormLabel>
-                    <Input {...field} placeholder="password" />
+                    <InputGroup>
+                      <Input
+                        {...field}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="password"
+                      />
+                      <InputRightElement w="4.5rem">
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          onClick={() => setshowPassword(!showPassword)}
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                     <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
               <div>
-                <Link  style={{textDecoration:"underline", padding:"5% 0%"}} to="/forgetPassword">Forget Password?</Link>
-
+                <Link
+                  style={{ textDecoration: "underline", padding: "5% 0%" }}
+                  to="/forgetPassword"
+                >
+                  Forget Password?
+                </Link>
               </div>
-           
+
               <Button
                 mt={4}
                 colorScheme="teal"
@@ -99,9 +120,12 @@ const Login = () => {
             </Form>
           )}
         </Formik>
-        <p style={{color:"#51759A", paddingTop:"5%"}}>Don't have an account click on {" "}
-          <Link  style={{textDecoration:"underline"}} to="/signup">Signup</Link></p>
-       
+        <p style={{ color: "#51759A", paddingTop: "5%" }}>
+          Don't have an account click on{" "}
+          <Link style={{ textDecoration: "underline" }} to="/signup">
+            Signup
+          </Link>
+        </p>
       </Card>
     </AuthLayout>
   );
