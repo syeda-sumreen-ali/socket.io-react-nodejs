@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid, Image , GridItem } from '@chakra-ui/react'
-import Signup from './signup'
-const Auth = () => {
+const AuthLayout = ({children}) => {
   return (
     <Grid
         h='100vh'
@@ -11,7 +10,7 @@ const Auth = () => {
         overflow={"hidden"}
         >
         <GridItem rowSpan={2} colSpan={2} bg='#616084'  >
-          <Signup/>
+          {children}
         </GridItem>
         <GridItem rowSpan={2}  colSpan={3} bg='tomato'>
           <Image
@@ -23,4 +22,4 @@ const Auth = () => {
   )
 }
 
-export default Auth
+export default AuthLayout

@@ -7,7 +7,6 @@ import {
   FormErrorMessage,
   FormHelperText,
   Input,
-  InputGroup,
   Button,
   Card,
   CardHeader,
@@ -18,7 +17,7 @@ import AuthLayout from "../../component/authLayout";
 import { Link} from "react-router-dom"
 
 
-const Login = () => {
+const ForgetPassword = () => {
   const [requestInfo, setrequestInfo] = useState({
     email: "",
     password: "",
@@ -38,8 +37,8 @@ const Login = () => {
           <Heading as='h2' size='2xl' paddingBottom={"5%"}  color={"#FFB769"}>
           Chaye!
         </Heading>
-        <Heading as='h3' size='lg' paddingBottom={"5%"}  color={"#052645"}>
-          Login
+        <Heading as='h3' size='lg'  color={"#052645"}>
+          Forget Password
         </Heading>
         {/* <p style={{color:"#51759A", paddingBottom:"5%"}}>Create your account to and make your own community</p> */}
         <Formik
@@ -84,7 +83,11 @@ const Login = () => {
                 )}
               </Field>
               <div>
-                <Link  style={{textDecoration:"underline", padding:"5% 0%"}} to="/signup">Forget Password?</Link>
+                <Link  style={{
+                  color:"#51759A",
+                  textDecoration:"underline",
+                   padding:"5% 0%"
+                   }} to="/forgetPassword">Forget Password?</Link>
 
               </div>
            
@@ -107,4 +110,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;
